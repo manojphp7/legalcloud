@@ -12,7 +12,69 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        body, button, input, select, textarea {
+            font-family: 'Open Sans', sans-serif;
+            color: #222;
+            font-size: 16px;
+            line-height: 1.6;
+            font-weight: normal;
+            letter-spacing: .15px;
+            background: #fff;
+        }
+        .custom-nav
+            {
+                background-color: #222;
+                font-weight: 600;
+            }
+            .custom-nav ul li:hover
+            {
+                background-color: #ff9f1a;
+                color:#fff;
+            }
+            .custom-nav ul li a
+            {
+                color:#fff!important;
+            }
+            @media (min-width: 768px){
 
+            .navbar-nav{
+                text-align:center;
+                float:none;
+            }
+            .navbar-nav li{
+                float:none;
+                display:inline-block;
+                
+            }
+            .navbar-nav > li > a
+            {
+                padding-top: 22px;
+                padding-bottom: 22px;
+            }
+            .dropdown-toggle:visited,.dropdown-toggle:focus
+            {
+                background: #333333!important;
+            }
+            .dropdown-menu li 
+            {
+                width:100%;
+            }
+            .dropdown-menu
+            {
+                padding:0px;
+            }
+            li.dropdown.open a
+            {
+                background: #333333;
+            }
+            li.dropdown.open a:hover
+            {
+                background: #333333;
+                color:#ff9f1a!important;
+            }
+            }
+    </style>
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -22,7 +84,8 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <img src="{{ asset('assets/images/logo.jpg')}}">
+        <nav class="navbar navbar-default navbar-center navbar-static-top custom-nav">
             <div class="container">
                 <div class="navbar-header">
 
@@ -35,45 +98,31 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel Blog') }}
-                    </a>
+                   
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
 
-                    @includeWhen(Auth::user(), 'layouts._admin_menu')
+                  
+
+                    @if(Auth::user())
+                        @includeWhen(Auth::user(), 'layouts._admin_menu')
+                    @else
+                        <ul class="nav navbar-nav">
+                        <li><a href="{{ url('admin/posts') }}">Articles</a></li>
+                        <li><a href="{{ url('admin/categories') }}">Categories</a></li>
+                        <li><a href="{{ url('admin/comments') }}">Comments</a></li>
+                        <li><a href="{{ url('admin/tags') }}">Tags</a></li>
+                        </ul>
+                    @endif
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
+                    
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('/profile') }}">Profile</a></li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
+                       
+                
+                    
                 </div>
             </div>
         </nav>

@@ -21,6 +21,7 @@ Route::get('/profile', 'Auth\\ProfileController@index')->middleware('auth');
 Route::get('/home', 'HomeController@index');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function() {
+    Route::resource('/dashboard', 'DashboardController');
     Route::resource('/posts', 'PostController');
     Route::put('/posts/{post}/publish', 'PostController@publish')->middleware('admin');
     Route::resource('/categories', 'CategoryController', ['except' => ['show']]);

@@ -3,7 +3,6 @@
 
     <div class="col-md-8">
         {!! Form::text('name', null, ['class' => 'form-control', 'required', 'autofocus']) !!}
-
         <span class="help-block">
             <strong>{{ $errors->first('name') }}</strong>
         </span>
